@@ -6,7 +6,7 @@
  * execute the below command to run:
  * c++ -std=c++11 Arrays\ and\ Strings/check_permutation.cpp && ./a.out
  */
-bool check_permutation(std::string s1, std::string s2)
+bool check_permutation(const std::string& s1, const std::string& s2)
 {
     // frequency of letters in s1
     std::map<char, int> freq;
