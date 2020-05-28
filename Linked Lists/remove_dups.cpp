@@ -12,10 +12,12 @@ void remove_dups(Node*& head)
         if(occurred.find((*walk)->val) == occurred.end())
         {
             occurred.insert((*walk)->val);
+            // we advance walk in the else clause in a different way
             walk = &((*walk)->next);
         }
         else
         {
+            // note that this way of deleting handles all edge cases
             Node* temp = *walk;
             *walk = (*walk)->next;
             delete temp;
@@ -42,6 +44,7 @@ int main()
     std::cout << "after: ";
     remove_dups(head);
     print(head);
+    std::cout << std::endl;
 
     Node* head2 = nullptr;
     addToTail(head2, 20);
@@ -52,6 +55,7 @@ int main()
     std::cout << "after: ";
     remove_dups(head2);
     print(head2);
+    std::cout << std::endl;
 
     Node* head3 = 0;
     std::cout << "before: ";
