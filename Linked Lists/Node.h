@@ -31,4 +31,20 @@ namespace LL
             walk = &((*walk)->next);
         *walk = new Node(val);
     }
+
+    void deleteFirstOccur(Node*& head, int val)
+    {
+        Node** walk = &head;
+        while(*walk && (*walk)->val != val)
+            walk = &((*walk)->next);
+
+        // unfortunately, we can't avoid this edge case :(
+        // the node we're trying to delete must be in the list
+        if(*walk)
+        {
+            Node* temp = *walk;
+            *walk = (*walk)->next;
+            delete temp;
+        }
+    }
 }
