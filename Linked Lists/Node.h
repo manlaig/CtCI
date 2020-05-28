@@ -47,4 +47,17 @@ namespace LL
             delete temp;
         }
     }
+
+    void deleteNode(Node*& head, Node* target)
+    {
+        Node** walk = &head;
+        while(*walk != target)
+            walk = &((*walk)->next);
+        if(*walk)
+        {
+            Node *temp = *walk;
+            *walk = (*walk)->next;
+            delete temp;
+        }
+    }
 }
