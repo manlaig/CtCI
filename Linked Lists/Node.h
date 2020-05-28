@@ -60,4 +60,18 @@ namespace LL
             delete temp;
         }
     }
+
+    void reverse(Node*& head)
+    {
+        // 1->2->3->4  =>  1<-2<-3<-4
+        Node *prev = 0, *curr = head;
+        while(curr)
+        {
+            Node* temp = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = temp;
+        }
+        head = prev;
+    }
 }
