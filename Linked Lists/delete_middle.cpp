@@ -13,9 +13,12 @@ void delete_middle(Node*& head)
     curr = head;
     for(int i = 0; i < count/2-1; i++)
         curr = curr->next;
-    Node* temp = curr->next;
-    curr->next = curr->next->next;
-    delete temp;
+    if(curr->next)
+    {
+        Node* temp = curr->next;
+        curr->next = curr->next->next;
+        delete temp;
+    }
 }
 
 int main()
@@ -23,6 +26,8 @@ int main()
     Node* head = 0;
     LL::addToTail(head, 1);
     LL::addToTail(head, 2);
+    LL::addToTail(head, 3);
+    LL::addToTail(head, 4);
     LL::addToTail(head, 5);
     LL::print(head);
     delete_middle(head);
