@@ -43,4 +43,16 @@ int main()
     print(head);
     partition(head, 3);
     print(head);
+    std::cout << std::endl;
+
+    Node* head2 = 0;
+    addToTail(head2, 1);
+    addToTail(head2, 5);
+    addToTail(head2, 4);
+    addToTail(head2, 3);
+    addToTail(head2, 2);
+    addToTail(head2, 6);
+    print(head2);
+    partition(head2, 10);
+    print(head2);
 }
