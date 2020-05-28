@@ -53,7 +53,12 @@ int main()
     addToHead(l2, 5);
     addToHead(l2, 4);
     // printed in reverse order
-    print(sum_lists(l1, l2));
+    Node* s4 = sum_lists(l1, l2);
+    std::cout << "added in reverse: ";
+    print(s4);
+    std::cout << "added in forward: ";
+    reverse(s4);
+    print(s4);
     std::cout << std::endl;
 
     // 3 -> 2 -> 1  +  5 -> 6  =  8 -> 8 -> 1
@@ -66,7 +71,12 @@ int main()
     addToHead(l4, 6);
     addToHead(l4, 5);
     // printed in reverse order
-    print(sum_lists(l3, l4));
+    Node* s3 = sum_lists(l3, l4);
+    std::cout << "added in reverse: ";
+    print(s3);
+    std::cout << "added in forward: ";
+    reverse(s3);
+    print(s3);
     std::cout << std::endl;
 
     // 3  +  5 -> 6  =  8 -> 6
@@ -77,7 +87,12 @@ int main()
     addToHead(l6, 6);
     addToHead(l6, 5);
     // printed in reverse order
-    print(sum_lists(l5, l6));
+    Node* s2 = sum_lists(l5, l6);
+    std::cout << "added in reverse: ";
+    print(s2);
+    std::cout << "added in forward: ";
+    reverse(s2);
+    print(s2);
     std::cout << std::endl;
 
     // 9  +  9  =  8 -> 1
@@ -87,5 +102,10 @@ int main()
     Node* l8 = 0;
     addToHead(l8, 9);
     // printed in reverse order
-    print(sum_lists(l7, l8));
+    Node* s = sum_lists(l7, l8);
+    std::cout << "added in reverse: ";
+    print(s);
+    std::cout << "added in forward: ";
+    reverse(s);
+    print(s);
 }
