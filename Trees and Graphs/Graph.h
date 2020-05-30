@@ -4,10 +4,10 @@
 // implementation of graph using an adjacency list
 class Graph
 {
+public:
     // array of node pointers
     Node* *arr;
     int size;
-public:
     Graph(int vertices);
     ~Graph();
     void addDirected(int from, int to);
