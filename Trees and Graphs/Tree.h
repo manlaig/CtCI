@@ -16,7 +16,7 @@ namespace BST
         if(!root)
             root = new Node(val);
         else
-            add(val > root->val ? root->left : root->right, val);
+            add(val > root->val ? root->right : root->left, val);
     }
 
     void print_in_order(Node* root)
@@ -34,7 +34,6 @@ namespace BST
     void print_by_level(Node* root)
     {
         std::queue<Node*> q;
-        std::set<Node*> visited;
         q.push(root);
         
         while(q.size())
@@ -45,8 +44,7 @@ namespace BST
                 q.push(top->left);
             if(top->right)
                 q.push(top->right);
-            //std::cout 
-            visited.insert(top);
+            std::cout << top->val << " ";
         }
     }
 
