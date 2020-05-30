@@ -5,7 +5,7 @@
 class SetOfPlates
 {
     size_t capacity;
-    int last;
+    int last;   // the stack that we're currently adding to
 public:
     std::vector<Stack*> plates;
     SetOfPlates(size_t);
@@ -31,6 +31,7 @@ void SetOfPlates::push(int val)
         plates[last]->push(val);
     else
     {
+        // create a new stack, if the current one exceeds capacity
         if(last >= plates.size()-1)
             plates.push_back(new Stack());
         plates[++last]->push(val);
@@ -40,7 +41,9 @@ void SetOfPlates::push(int val)
 int SetOfPlates::pop()
 {
     int out = plates[last]->pop();
-    if(!plates[last]->size && last)
+    // if  last > 0 and the current stack is empty,
+    // then go back to the previous filled stack
+    if(last && !plates[last]->size)
         last--;
     return out;
 }
