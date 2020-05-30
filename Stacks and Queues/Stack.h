@@ -4,8 +4,8 @@
 class Stack
 {
     Node* head;
-    int size;
 public:
+    int size;
     Stack() : head(0), size(0) {}
     ~Stack();
     int peek();
