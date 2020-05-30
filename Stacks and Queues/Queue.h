@@ -4,8 +4,8 @@
 class Queue
 {
     Node *head, *tail;
-    int size;
 public:
+    int size;
     Queue() : head(0), tail(0), size(0) {}
     ~Queue();
     int peek();
