@@ -33,25 +33,32 @@ namespace BST
     // now I need to print them in right way
     void print_by_level(Node* root)
     {
-        std::queue<Node*> q;
-        q.push(root);
-        
+        std::queue<std::pair<Node*, int> > q;
+        q.push(std::make_pair(root, 1));
+        int prev_depth = 0;
+
         while(q.size())
         {
-            Node* top = q.front();
+            std::pair<Node*, int> top = q.front();
             q.pop();
-            if(top->left)
-                q.push(top->left);
-            if(top->right)
-                q.push(top->right);
-            std::cout << top->val << " ";
+
+            if(top.first->left)
+                q.push(std::make_pair(top.first->left, top.second+1));
+            if(top.first->right)
+                q.push(std::make_pair(top.first->right, top.second+1));
+            
+            if(prev_depth != top.second)
+            {
+                prev_depth = top.second;
+                std::cout << std::endl;
+            }
+            std::cout << top.first->val << " ";
         }
+        std::cout << std::endl;
     }
 
     int get_height(Node* root)
     {
-        if(!root)
-            return 0;
-        return std::max(get_height(root->left), get_height(root->right)) + 1;
+        return !root ? 0 : std::max(get_height(root->left), get_height(root->right)) + 1;
     }
 }
