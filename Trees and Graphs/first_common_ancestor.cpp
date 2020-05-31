@@ -2,6 +2,11 @@
 #include <tuple>
 #include "Tree.h"
 
+/*
+    The problem gets complicated that n1 can be an ancestor of n2, if that wasn't the case
+    we can just return the first node that has n1 in one side and n2 in the other side
+*/
+
 // you may think we can just return the node where it has n1 in one side and n2 in the other side
 // but there's a case where the tree can be structured like a linked list
 BST::Node* search(BST::Node* root, BST::Node* n1, BST::Node* n2, std::tuple<bool, bool>& found)
