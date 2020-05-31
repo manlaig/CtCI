@@ -33,6 +33,8 @@ namespace BST
     // now I need to print them in right way
     void print_by_level(Node* root)
     {
+        if(!root)
+            return;
         std::queue<std::pair<Node*, int> > q;
         q.push(std::make_pair(root, 1));
         int prev_depth = 0;
