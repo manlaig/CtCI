@@ -9,6 +9,7 @@ namespace BST
         int val;
         Node *left, *right;
         Node(int v) : val(v), left(0), right(0) {}
+        virtual void useless() {}  // required by dynamic cast, imma just keep it here
     };
 
     void add(Node*& root, int val)
