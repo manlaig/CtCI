@@ -1,9 +1,30 @@
 #include <iostream>
 #include <set>
-#include <list>
+#include <vector>
 #include "Tree.h"
 
-void get_level_helper(std::list<int>* out, int depth, int curr, BST::Node* root)
+void permute_helper(std::vector<std::vector<int>>* out, std::vector<int> arr, int start, int end)
+{
+    if(start >= end)
+    {
+        out->push_back(arr);
+        return;
+    }
+    for(int i = start; i < end; i++)
+    {
+        std::swap(arr[start], arr[i]);
+        permute_helper(out, arr, start+1, end);
+    }
+}
+
+std::vector<std::vector<int>> permutations(std::vector<int> arr)
+{
+    std::vector<std::vector<int>> out;
+    permute_helper(&out, arr, 0, arr.size());
+    return out;
+}
+
+void get_level_helper(std::vector<int>* out, int depth, int curr, BST::Node* root)
 {
     if(!root)
         return;
@@ -17,11 +38,44 @@ void get_level_helper(std::list<int>* out, int depth, int curr, BST::Node* root)
 }
 
 // depth is 0-indexed
-std::list<int>* get_level(BST::Node* root, int depth)
+std::vector<int>* get_level(BST::Node* root, int depth)
 {
-    std::list<int>* out = new std::list<int>();
+    std::vector<int>* out = new std::vector<int>();
     get_level_helper(out, depth, 0, root);
     return out;
+}
+
+std::vector<int> add(std::vector<int>& arr1, std::vector<int>& arr2)
+{
+    std::vector<int> p(arr1.size() + arr2.size());
+    for(int i : arr1)
+        p.push_back(i);
+    for(int i : arr2)
+        p.push_back(i);
+    return p;
+}
+
+std::vector<std::vector<int>>* fill(std::vector<std::vector<int>>* out, std::vector<std::vector<int>>* p, int start, int depth)
+{
+    if(start >= depth)
+        return out;
+    if(!out->size())
+    {
+        std::vector<std::vector<int>> *editted = new std::vector<std::vector<int>>();
+        for(int j = 0; j < p[start].size(); j++)
+        {
+            editted->push_back((*p)[j]);
+        }
+        return fill(editted, p, start+1, depth);
+    }
+    
+    std::vector<std::vector<int>> *editted = new std::vector<std::vector<int>>();
+    for(int i = 0; i < out->size(); i++)
+        for(int j = 0; j < p[start].size(); j++)
+        {
+            editted->push_back(add((*out)[i], (*p)[j]));
+        }
+    return fill(editted, p, start+1, depth);
 }
 
 int main()
@@ -35,22 +89,13 @@ int main()
     BST::add(root, 13);
     BST::add(root, 18);
 
+    std::vector<std::vector<int>>* out;
+    int depth = BST::get_height(root) - 1;
+    std::vector<std::vector<int>> p[depth];
+    for(int i = 0; i < depth; i++)
     {
-        std::list<int>* out = get_level(root, 2);
-        for(auto it = out->begin(); it != out->end(); it++)
-            std::cout << *it << ' ';
-        std::cout << std::endl;
-    }
-    {
-        std::list<int>* out = get_level(root, 1);
-        for(auto it = out->begin(); it != out->end(); it++)
-            std::cout << *it << ' ';
-        std::cout << std::endl;
-    }
-    {
-        std::list<int>* out = get_level(root, 0);
-        for(auto it = out->begin(); it != out->end(); it++)
-            std::cout << *it << ' ';
-        std::cout << std::endl;
+        std::vector<int>* temp = get_level(root, i);
+        p[i] = permutations(*temp);
+        fill(out, p, 0, depth);
     }
 }
