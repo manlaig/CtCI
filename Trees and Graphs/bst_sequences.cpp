@@ -1,9 +1,14 @@
 #include <iostream>
 #include <set>
-#include <vector>
+#include<vector>
 #include "Tree.h"
+using namespace std;
 
-void permute_helper(std::vector<std::vector<int>>* out, std::vector<int> arr, int start, int end)
+/*
+    for generating all permutations of a level in a BST
+    we get the level of BST in an array and pass it here
+*/
+void permute_helper(vector<vector<int>>* out, vector<int> arr, int start, int end)
 {
     if(start >= end)
     {
@@ -17,14 +22,17 @@ void permute_helper(std::vector<std::vector<int>>* out, std::vector<int> arr, in
     }
 }
 
-std::vector<std::vector<int>> permutations(std::vector<int> arr)
+vector<vector<int>> permutations(vector<int> arr)
 {
-    std::vector<std::vector<int>> out;
+    vector<vector<int>> out;
     permute_helper(&out, arr, 0, arr.size());
     return out;
 }
 
-void get_level_helper(std::vector<int>* out, int depth, int curr, BST::Node* root)
+/*
+    for getting a level in a BST, we then generate all permutation of it
+*/
+void get_level_helper(vector<int>* out, int depth, int curr, BST::Node* root)
 {
     if(!root)
         return;
@@ -38,44 +46,39 @@ void get_level_helper(std::vector<int>* out, int depth, int curr, BST::Node* roo
 }
 
 // depth is 0-indexed
-std::vector<int>* get_level(BST::Node* root, int depth)
+vector<int>* get_level(BST::Node* root, int depth)
 {
-    std::vector<int>* out = new std::vector<int>();
+    vector<int>* out = new vector<int>();
     get_level_helper(out, depth, 0, root);
     return out;
 }
 
-std::vector<int> add(std::vector<int>& arr1, std::vector<int>& arr2)
+void print(const vector<vector<int>>& out)
 {
-    std::vector<int> p(arr1.size() + arr2.size());
-    for(int i : arr1)
-        p.push_back(i);
-    for(int i : arr2)
-        p.push_back(i);
-    return p;
+    for(auto vec : out)
+    {
+        for(int num : vec)
+            cout << num << " ";
+        cout << endl;
+    }
 }
 
-std::vector<std::vector<int>>* fill(std::vector<std::vector<int>>* out, std::vector<std::vector<int>>* p, int start, int depth)
+void print(const vector<int>& vec)
 {
-    if(start >= depth)
-        return out;
-    if(!out->size())
-    {
-        std::vector<std::vector<int>> *editted = new std::vector<std::vector<int>>();
-        for(int j = 0; j < p[start].size(); j++)
-        {
-            editted->push_back((*p)[j]);
-        }
-        return fill(editted, p, start+1, depth);
-    }
-    
-    std::vector<std::vector<int>> *editted = new std::vector<std::vector<int>>();
-    for(int i = 0; i < out->size(); i++)
-        for(int j = 0; j < p[start].size(); j++)
-        {
-            editted->push_back(add((*out)[i], (*p)[j]));
-        }
-    return fill(editted, p, start+1, depth);
+    for(int num : vec)
+        cout << num << " ";
+    cout << endl;
+}
+
+vector<int> operator+(const vector<int>& v, const vector<int>& v2)
+{
+    vector<int> out;
+    out.reserve(v.size() + v2.size());
+    for(int i : v)
+        out.push_back(i);
+    for(int i : v2)
+        out.push_back(i);
+    return out;
 }
 
 int main()
@@ -89,13 +92,27 @@ int main()
     BST::add(root, 13);
     BST::add(root, 18);
 
-    std::vector<std::vector<int>>* out;
-    int depth = BST::get_height(root) - 1;
-    std::vector<std::vector<int>> p[depth];
+    vector<vector<int>> out;
+
+    int depth = BST::get_height(root);
+
     for(int i = 0; i < depth; i++)
     {
-        std::vector<int>* temp = get_level(root, i);
-        p[i] = permutations(*temp);
-        fill(out, p, 0, depth);
+        vector<int>* level = get_level(root, i);
+        vector<vector<int>> perm = permutations(*level);
+
+        vector<vector<int>> new_out;
+
+        if(!out.size())
+            for(auto v : perm)
+                new_out.push_back(v);
+        else
+            for(vector<int> v : out)
+                for(vector<int> vv : perm)
+                    new_out.push_back(v + vv);
+
+        out = new_out;
     }
+
+    print(out);
 }
