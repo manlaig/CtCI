@@ -1,5 +1,12 @@
 #include "utils.h"
 
+/*
+    1. create a mask that will decide which elements will be inserted from M
+    2. clear all bits OUTSIDE the [i, j] range in M
+    3. clear all bits INSIDE the [i, j] range in M
+    4. OR M and N together
+*/
+
 // insert M into N from index i to j
 int insert(int N, int M, unsigned i, unsigned j)
 {
@@ -8,6 +15,7 @@ int insert(int N, int M, unsigned i, unsigned j)
     uint32_t mask = ~(((-1u << (32 - j)) >> (31 - j + i)) << i);
 
     // clearing bits outside i and j because we'll be ORing them together
+    // shifting mask by i because we want to insert M from index 0
     M &= ~(mask >> i);
     N = (N & mask) | (M << i);
     std::cout << "mask: ";
