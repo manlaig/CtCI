@@ -3,7 +3,7 @@
 
 namespace Bit
 {
-    void print(int num)
+    void print(unsigned num)
     {
         std::stack<char> s;
         while(num > 0)
