@@ -1,0 +1,4 @@
+Question: Explain what the following code does: ((N & (N - 1)) == 0).
+
+Answer: Checks if N is a power of 2, if it is, it looks similar to '001000' and N - 1 = '000111',
+        ANDing them would give 0 if N is a power of 2
