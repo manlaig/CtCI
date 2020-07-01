@@ -17,9 +17,4 @@ def next_number(num):
     print("\nLargest: ", largest)
     print("Largest in base 2: ", str(bin(largest))[2:])
 
-
-    """b = str(bin(num+1))[2:]
-    print(b)
-    print(int("10101010101010101010101101010101", 2))"""
-
 next_number(5)
