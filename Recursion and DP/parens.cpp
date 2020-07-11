@@ -18,4 +18,7 @@ int main()
 {
    int n = 3;
    parens("", n, 2*n);
+
+   int n2 = 4;
+   parens("", n2, 2*n2);
 }
