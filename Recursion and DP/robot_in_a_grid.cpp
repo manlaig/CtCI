@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <stack>
 #include <list>
 using namespace std;
 
+/////////////////////////////////// Solution 1 ///////////////////////////////////
 list<pair<int, int>> find_path(
     const vector<vector<int>>& grid,
     int x, int y,
@@ -55,6 +57,43 @@ list<pair<int, int>> find_path(const vector<vector<int>>& grid)
     return find_path(grid, 0, 0, dp);
 }
 
+/////////////////////////////////// Solution 2 ///////////////////////////////////
+list<pair<int,int>> find_path_DFS(const vector<vector<int>>& grid)
+{
+    int n = grid.size();
+    if(!n || grid[0].size() != n)
+        return {};
+
+    stack<list<pair<int,int>>> s;
+    s.push({make_pair(0, 0)});
+
+    while(!s.empty())
+    {
+        auto lst = s.top();
+        s.pop();
+
+        pair<int, int> curr = lst.back();
+        if(curr.first == n-1 && curr.second == n-1)
+            return lst;
+
+        int bot = 0;
+        if(curr.second+1 < n && !grid[curr.first][curr.second+1])
+        {
+            bot = 1;
+            lst.push_back(make_pair(curr.first, curr.second+1));
+            s.push(lst);
+        }
+        if(curr.first+1 < n && !grid[curr.first+1][curr.second])
+        {
+            if(bot)
+                lst.pop_back();
+            lst.push_back(make_pair(curr.first+1, curr.second));
+            s.push(lst);
+        }
+    }
+    return {};
+}
+
 void print(const list<pair<int,int>>& lst)
 {
     int cnt = 0;
@@ -66,27 +105,30 @@ void print(const list<pair<int,int>>& lst)
 
 int main()
 {
-   auto path = find_path({
-       {0,0,0,1},
-       {0,1,0,0},
-       {1,0,0,0},
-       {0,1,0,0}
-   });
-   print(path);
+    vector<vector<int>> grid1 = {
+        {0,0,0,1},
+        {0,1,0,0},
+        {1,0,0,0},
+        {0,1,0,0}
+    };
+    print(find_path(grid1));
+    print(find_path_DFS(grid1));
 
-   auto path2 = find_path({
-       {0,0,0,0},
-       {0,1,1,0},
-       {0,0,1,1},
-       {0,1,0,0}
-   });
-   print(path2);    // no path
+    vector<vector<int>> grid2 = {
+        {0,0,0,0},
+        {0,1,1,0},
+        {0,0,1,1},
+        {0,1,0,0}
+    };
+    print(find_path(grid2));    // no path
+    print(find_path_DFS(grid2));    // no path
 
-   auto path3 = find_path({
-       {0,0,0,0},
-       {0,0,0,0},
-       {0,0,0,0},
-       {0,0,0,0}
-   });
-   print(path3);
+    vector<vector<int>> grid3 = {
+        {0,0,0,0},
+        {0,0,0,0},
+        {0,0,0,0},
+        {0,0,0,0}
+    };
+    print(find_path(grid3));    // no path
+    print(find_path_DFS(grid3));    // no path
 }
