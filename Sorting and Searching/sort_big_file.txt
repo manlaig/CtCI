@@ -1,0 +1,4 @@
+Question: Imagine you have a 20 GB file with one string per line. Explain how you would sort the file.
+
+Answer: Use Radix Sort. If m is the length of the longest line and n is number of lines,
+then the time complexity will be O(m*n).
