@@ -1,6 +1,11 @@
 #include <iostream>
 #include <vector>
 
+/*
+    The logic in this problem is that you first implement normal binary search,
+    then ask "what are the cases when I should choose the opposite side?"
+*/
+
 int search(const std::vector<int>& arr, int target)
 {
     int low = 0;
