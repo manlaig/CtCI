@@ -2,6 +2,8 @@
 #include <tuple>
 #include "Tree.h"
 
+// Update: I solved the same problem in Leetcode and submitted my solution in my other repo
+
 /*
     The problem gets complicated that n1 can be an ancestor of n2, if that wasn't the case
     we can just return the first node that has n1 in one side and n2 in the other side
